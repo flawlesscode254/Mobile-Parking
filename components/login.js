@@ -14,6 +14,7 @@ const LoginScreen = ({ navigation }) => {
       .signInWithEmailAndPassword(email, password)
       .then((authUser) => {
         // some stuff...
+        navigation.replace("Home");
       })
       .catch((error) => alert(error.message));
   };
