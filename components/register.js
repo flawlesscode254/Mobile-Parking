@@ -1,17 +1,20 @@
 import React, { useState, useLayoutEffect } from "react";
 import { StyleSheet, View, KeyboardAvoidingView } from "react-native";
-import { Input, Button, Text } from "react-native-elements";
+import { Input, Button, Text, Image, Overlay } from "react-native-elements";
 import { StatusBar } from "expo-status-bar";
 import { auth } from "./../firebase";
+import Parking from '../assets/spinner.gif'
+
 
 const register = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [visible, setVisible] = useState(false);
 
-  const register = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
+  const register = async () => {
+      await setVisible(!visible);
+      await auth.createUserWithEmailAndPassword(email, password)
       .then( async (authUser) => {
         await authUser.user.updateProfile({
           displayName: name
@@ -49,7 +52,10 @@ const register = ({ navigation }) => {
           onChangeText={(text) => setPassword(text)}
         />
         <Button raised onPress={register} title="Register" />
-      </View>
+        <Overlay isVisible={visible}>
+          <Image source={Parking} style={styles.logo} />
+        </Overlay>
+      </View>  
     </KeyboardAvoidingView>
   )
 }
@@ -65,6 +71,10 @@ const styles = StyleSheet.create({
   },
   registerContainer: {
     width: 300,
+  },
+  logo: {
+    width: 150,
+    height: 150,
   },
 })
 

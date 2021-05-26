@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, KeyboardAvoidingView } from "react-native";
-import { Button, Input, Image } from "react-native-elements";
+import { Button, Input, Image, Overlay } from "react-native-elements";
 import { StatusBar } from "expo-status-bar";
 import { auth } from "./../firebase";
 import Parking from '../assets/parking.png'
+import Parkings from '../assets/spinner.gif'
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [visible, setVisible] = useState(false);
 
-  const login = () => {
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
+  const login = async () => {
+    await setVisible(!visible);
+    await auth.signInWithEmailAndPassword(email, password)
+      .then( async () => {
         // some stuff...
-        navigation.replace("Home");
+        await navigation.replace("Home");
       })
       .catch((error) => alert(error.message));
   };
@@ -57,6 +59,9 @@ const LoginScreen = ({ navigation }) => {
           type="outline"
           onPress={() => navigation.navigate("Register")}
         />
+        <Overlay isVisible={visible}>
+          <Image source={Parkings} style={styles.logo} />
+        </Overlay>
       </View>
       <View style={{ height: 100 }} />
     </KeyboardAvoidingView>
