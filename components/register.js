@@ -12,10 +12,11 @@ const register = ({ navigation }) => {
   const register = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        authUser.user.updateProfile({
+      .then( async (authUser) => {
+        await authUser.user.updateProfile({
           displayName: name
         });
+        await navigation.replace("Home");
       })
       .catch((error) => alert(error.message));
   };
