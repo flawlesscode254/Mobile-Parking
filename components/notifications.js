@@ -25,7 +25,9 @@ const check = () => {
             id: doc.id,
             name: doc.data().name,
             phone: doc.data().phone,
-            plate: doc.data().plate
+            plate: doc.data().plate,
+            city: doc.data().city,
+            parking: doc.data().parking
           })))
       }) 
       await setVisible(visible)
@@ -35,31 +37,6 @@ const check = () => {
   return (
       <SafeAreaView>
         <ScrollView>
-             <View
-          style={{
-            backgroundColor: "#5359D1",
-            borderRadius: 10,
-            padding: 20,
-            marginTop: 5,
-          }}
-        >
-          <Text
-            style={{
-              fontWeight: "bold",
-              color: "white",
-              fontSize: 20,
-            }}
-          >
-            Naivas Supermarket Parking
-          </Text>
-          <Text
-            style={{
-              color: "orange",
-            }}
-          >
-            Kericho Town
-          </Text>
-        </View>
         <View style={{
           marginTop: 10,
           marginBottom: 10
@@ -72,12 +49,14 @@ const check = () => {
             </Overlay>
         </View>
         
-          {stream.map(({id, name, phone, plate}) => (
+          {stream.map(({id, name, phone, plate, city, parking}) => (
             <View id={id} >
               <Detailed
                 name={name}
                 phone={phone}
                 plate={plate}
+                city={city}
+                parking={parking}
               />
               </View>
           ))}

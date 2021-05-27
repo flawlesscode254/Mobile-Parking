@@ -4,9 +4,35 @@ import prof from '../assets/prof.png'
 import { auth } from '../firebase'
 import { Image } from 'react-native-elements'
 
-const detailed = ({name, phone, plate}) => {
+const detailed = ({name, phone, plate, city, parking}) => {
     return (
-           <View
+      <View>
+         <View
+          style={{
+            backgroundColor: "#5359D1",
+            borderRadius: 10,
+            padding: 20,
+            marginTop: 5,
+          }}
+        >
+          <Text
+            style={{
+              fontWeight: "bold",
+              color: "white",
+              fontSize: 20,
+            }}
+          >
+            {parking}
+          </Text>
+          <Text
+            style={{
+              color: "orange",
+            }}
+          >
+            {city}
+          </Text>
+        </View>
+        <View
           style={{
             display: "flex",
             justifyContent: "center",
@@ -64,6 +90,8 @@ const detailed = ({name, phone, plate}) => {
             {plate}
           </Text>
         </View>
+      </View>
+           
     )
 }
 
