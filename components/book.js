@@ -32,7 +32,7 @@ const MyWeb = ({ navigation }) => {
           <WebView
             style={{flex: 1}}
             //Loading URL
-            source={{uri: 'https://hungry-curie-7b7404.netlify.app/'}}
+            source={{uri: 'https://condescending-morse-11dc82.netlify.app/'}}
             //Enable Javascript support
             javaScriptEnabled={true}
             //For the Cache
