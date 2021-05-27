@@ -1,18 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
-  Image,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import { Button, Overlay } from 'react-native-elements'
+import Detailed from './detailed'
+import { db } from '../firebase'
+import { ScrollView } from "react-native";
 import { auth } from '../firebase'
-import prof from '../assets/prof.png'
 
 const check = () => {
+  const [stream, setStream] = useState([])
+  const [visible, setVisible] = useState(false);
+
+  const Reveal = async () => {
+      await setVisible(!visible);
+      await db.collection('orders')
+      .where("email", '==', auth?.currentUser?.email)
+      .onSnapshot(snapshot => {
+        setStream(snapshot.docs.map(doc => (
+          {
+            id: doc.id,
+            name: doc.data().name,
+            phone: doc.data().phone,
+            plate: doc.data().plate
+          })))
+      }) 
+      await setVisible(visible)
+  }
+
+
   return (
       <SafeAreaView>
-        <View
+        <ScrollView>
+             <View
           style={{
             backgroundColor: "#5359D1",
             borderRadius: 10,
@@ -37,83 +60,30 @@ const check = () => {
             Kericho Town
           </Text>
         </View>
-
-        <View
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 5,
-            borderColor: "blue",
-            borderRadius: 10,
-            backgroundColor: "#5359D1",
-            padding: 40,
-          }}
-        >
-          <Image
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: 999,
-              marginBottom: 20,
-            }}
-            source={prof}
-          ></Image>
-          <Text
-            style={{
-              fontWeight: "bold",
-              color: "white",
-              marginTop: 10,
-            }}
-          >
-            {auth?.currentUser?.displayName}
-          </Text>
-          <Text
-            style={{
-              fontWeight: "bold",
-              color: "white",
-              marginTop: 10,
-            }}
-          >
-            0769084353
-          </Text>
-          <Text
-            style={{
-              fontWeight: "bold",
-              color: "white",
-              marginTop: 10,
-            }}
-          >
-            duncanii414@gmail.com
-          </Text>
-          <Text
-            style={{
-              fontWeight: "bold",
-              color: "white",
-              marginTop: 10,
-            }}
-          >
-            KBU 364B
-          </Text>
-          <Text
-            style={{
-              fontWeight: "bold",
-              color: "white",
-              marginTop: 10,
-            }}
-          >
-            StartTime
-          </Text>
-          <Text
-            style={{
-              fontWeight: "bold",
-              color: "white",
-              marginTop: 10,
-            }}
-          >
-            End Time
-          </Text>
+        <View style={{
+          marginTop: 10,
+          marginBottom: 10
+        }}>
+          <Button title="View Your Credentials" onPress={Reveal} />
         </View>
+        <View>
+            <Overlay isVisible={visible}>
+              <Text>Fetching...</Text>
+            </Overlay>
+        </View>
+        
+          {stream.map(({id, name, phone, plate}) => (
+            <View id={id} >
+              <Detailed
+                name={name}
+                phone={phone}
+                plate={plate}
+              />
+              </View>
+          ))}
+        
+        </ScrollView>
+     
       </SafeAreaView>
   );
 };
