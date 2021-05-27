@@ -18,7 +18,7 @@ const settings = () => {
             })
             setPin('')
         })
-        await setVisible(visible);
+        await setVisible(visible)
     }
 
     return (
