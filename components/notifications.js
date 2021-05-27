@@ -4,11 +4,11 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView
 } from "react-native";
 import { Button, Overlay } from 'react-native-elements'
 import Detailed from './detailed'
 import { db } from '../firebase'
-import { ScrollView } from "react-native";
 import { auth } from '../firebase'
 
 const check = () => {
@@ -50,8 +50,9 @@ const check = () => {
         </View>
         
           {stream.map(({id, name, phone, plate, city, parking}) => (
-            <View id={id} >
+            <View>
               <Detailed
+                key={id}
                 name={name}
                 phone={phone}
                 plate={plate}
