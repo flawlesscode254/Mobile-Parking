@@ -16,14 +16,13 @@ const LoginScreen = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    setTestDeviceIDAsync("EMULATOR");
+    setTestDeviceIDAsync("SIMULATOR");
 }, [])
 
   const login = async () => {
     await setVisible(!visible);
     await auth.signInWithEmailAndPassword(email, password)
       .then( async () => {
-        // some stuff...
         await navigation.replace("Home");
       })
       .catch((error) => alert(error.message));
