@@ -1,16 +1,23 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import { StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import { Input, Button, Text, Image, Overlay } from "react-native-elements";
 import { StatusBar } from "expo-status-bar";
 import { auth } from "./../firebase";
 import Parking from '../assets/spinner.gif'
-
+import {
+  AdMobBanner,
+  setTestDeviceIDAsync
+} from "expo-ads-admob";
 
 const register = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+      setTestDeviceIDAsync("EMULATOR");
+  }, [])
 
   const register = async () => {
       await setVisible(!visible);
@@ -33,6 +40,25 @@ const register = ({ navigation }) => {
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <StatusBar style="light" />
+      <View
+        style={{
+          shadowOffset: { width: 5, height: 5 },
+          width: "90%",
+          borderRadius: 5,
+          alignSelf: "center",
+          alignContent: "center",
+          alignItems: "center",
+          marginTop: 10,
+          marginBottom: 10,
+        }}
+      >
+      <AdMobBanner
+          bannerSize="smartBanner"
+          adUnitID="ca-app-pub-1575625881370911/6730615952" 
+          servePersonalizedAds // true or false
+          onDidFailToReceiveAdWithError={(e) => console.log(e)}
+          />
+      </View>
       <Text h3 style={{ marginBottom: 50 }}>
         Create an account
       </Text>

@@ -1,9 +1,37 @@
-import React from 'react'
-import { StyleSheet, Text, ScrollView } from 'react-native'
+import React, { useEffect } from 'react'
+import { StyleSheet, Text, ScrollView, View } from 'react-native'
+import {
+    AdMobBanner,
+    setTestDeviceIDAsync
+  } from "expo-ads-admob";
 
 const terms = () => {
+
+    useEffect(() => {
+        setTestDeviceIDAsync("EMULATOR");
+    }, [])
+
     return (
         <ScrollView>
+            <View
+        style={{
+          shadowOffset: { width: 5, height: 5 },
+          width: "90%",
+          borderRadius: 5,
+          alignSelf: "center",
+          alignContent: "center",
+          alignItems: "center",
+          marginTop: 10,
+          marginBottom: 10,
+        }}
+      >
+      <AdMobBanner
+          bannerSize="smartBanner"
+          adUnitID="ca-app-pub-1575625881370911/6730615952" 
+          servePersonalizedAds // true or false
+          onDidFailToReceiveAdWithError={(e) => console.log(e)}
+          />
+      </View>
             <Text style={{
                 color: "black",
                 fontSize: 20,

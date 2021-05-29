@@ -1,32 +1,31 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-// Tab ICons...
 import home from '../assets/home.png';
 import notifications from '../assets/bell.png';
 import settings from '../assets/settings.png';
 import logout from '../assets/logout.png';
-// Menu
 import menu from '../assets/menu.png';
 import close from '../assets/close.png';
-
-// Photo
 import Notifications from '../components/notifications'
 import Settings from '../components/settings'
 import { auth } from '../firebase'
 import Terms from '../components/terms'
 import star from '../assets/star.png'
 import prof from '../assets/prof.png'
-
+import {
+  AdMobBanner,
+  setTestDeviceIDAsync
+} from "expo-ads-admob";
 
 const Home = ({ navigation }) => {
   const [currentTab, setCurrentTab] = useState("Home");
-  // To get the curretn Status of menu ...
   const [showMenu, setShowMenu] = useState(false);
 
-  // Animated Properties...
+  useEffect(() => {
+    setTestDeviceIDAsync("EMULATOR");
+  }, [])
 
   const offsetValue = useRef(new Animated.Value(0)).current;
-  // Scale Intially must be One...
   const scaleValue = useRef(new Animated.Value(1)).current;
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
 
@@ -40,6 +39,25 @@ const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ justifyContent: 'flex-start', padding: 15 }}>
+      <View
+        style={{
+          shadowOffset: { width: 5, height: 5 },
+          width: "90%",
+          borderRadius: 5,
+          alignSelf: "center",
+          alignContent: "center",
+          alignItems: "center",
+          marginTop: 10,
+          marginBottom: 10,
+        }}
+      >
+      <AdMobBanner
+          bannerSize="smartBanner"
+          adUnitID="ca-app-pub-1575625881370911/6730615952" 
+          servePersonalizedAds // true or false
+          onDidFailToReceiveAdWithError={(e) => console.log(e)}
+          />
+      </View>
         <Image source={prof} style={{
           width: 60,
           height: 60,
@@ -84,9 +102,6 @@ const Home = ({ navigation }) => {
         </View>
 
         <View style={{ flexGrow: 1, marginTop: 50 }}>
-          {
-            // Tab Bar Buttons....
-          }
 
           {TabButton(currentTab, setCurrentTab, "Home", home)}
           {TabButton(currentTab, setCurrentTab, "Notifications", notifications)}
@@ -125,10 +140,6 @@ const Home = ({ navigation }) => {
 
       </View>
 
-      {
-        // Over lay View...
-      }
-
       <Animated.View style={{
         flexGrow: 1,
         backgroundColor: 'white',
@@ -140,16 +151,11 @@ const Home = ({ navigation }) => {
         paddingHorizontal: 15,
         paddingVertical: 20,
         borderRadius: showMenu ? 15 : 0,
-        // Transforming View...
         transform: [
           { scale: scaleValue },
           { translateX: offsetValue }
         ]
       }}>
-
-        {
-          // Menu Button...
-        }
 
         <Animated.View style={{
           transform: [{
@@ -157,8 +163,6 @@ const Home = ({ navigation }) => {
           }]
         }}>
           <TouchableOpacity onPress={() => {
-            // Do Actions Here....
-            // Scaling the view...
             Animated.timing(scaleValue, {
               toValue: showMenu ? 1 : 0.88,
               duration: 300,
@@ -167,7 +171,6 @@ const Home = ({ navigation }) => {
               .start()
 
             Animated.timing(offsetValue, {
-              // YOur Random Value...
               toValue: showMenu ? 0 : 230,
               duration: 300,
               useNativeDriver: true
@@ -175,7 +178,6 @@ const Home = ({ navigation }) => {
               .start()
 
             Animated.timing(closeButtonOffset, {
-              // YOur Random Value...
               toValue: !showMenu ? -30 : 0,
               duration: 300,
               useNativeDriver: true
@@ -213,7 +215,6 @@ const Home = ({ navigation }) => {
   );
 }
 
-// For multiple Buttons...
 const TabButton = (currentTab, setCurrentTab, title, image) => {
   return (
     <TouchableOpacity onPress={() => {
