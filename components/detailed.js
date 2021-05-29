@@ -13,6 +13,8 @@ const detailed = ({name, phone, plate, city, parking}) => {
             borderRadius: 10,
             padding: 20,
             marginTop: 5,
+            flex: 1,
+            flexWrap: 'wrap'
           }}
         >
           <Text

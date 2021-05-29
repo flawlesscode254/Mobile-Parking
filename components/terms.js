@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, ScrollView, View } from 'react-native'
+import { StyleSheet, Text, ScrollView, View, SafeAreaView } from 'react-native'
 import {
     AdMobBanner,
     setTestDeviceIDAsync
@@ -12,7 +12,7 @@ const terms = () => {
     }, [])
 
     return (
-        <ScrollView>
+        <SafeAreaView>
             <View
         style={{
           shadowOffset: { width: 5, height: 5 },
@@ -27,12 +27,13 @@ const terms = () => {
       >
       <AdMobBanner
           bannerSize="smartBanner"
-          adUnitID="ca-app-pub-1575625881370911/6730615952" 
+          adUnitID="ca-app-pub-1575625881370911/2289997432" 
           servePersonalizedAds // true or false
           onDidFailToReceiveAdWithError={(e) => console.log(e)}
           />
       </View>
-            <Text style={{
+      <ScrollView>
+          <Text style={{
                 color: "black",
                 fontSize: 20,
                 fontWeight: "bold"
@@ -53,17 +54,9 @@ const terms = () => {
             <Text>10.The pin allows you to view a security code that is only unique to you that is essential
                 in clearing you from the parking spot.
             </Text>
-            <Text style={{
-                color: "red",
-                fontSize: 15,
-                fontWeight: "bold"
-            }}>NOTE: We will always update information here. So keep reading them regularly</Text>
-            <Text style={{
-                color: "red",
-                fontSize: 15,
-                fontWeight: "bold"
-            }}>Remember that it is currently K.sh 30 per hour of parking and that translates to 50 cents per minute</Text>
-        </ScrollView>
+      </ScrollView>
+        </SafeAreaView>
+       
     )
 }
 

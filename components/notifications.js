@@ -12,13 +12,14 @@ import { db } from '../firebase'
 import { auth } from '../firebase'
 import {
   AdMobBanner,
-  setTestDeviceIDAsync
+  setTestDeviceIDAsync,
 } from "expo-ads-admob"
 
 const check = () => {
   const [stream, setStream] = useState([])
   const [visible, setVisible] = useState(false);
-    useEffect(() => {
+
+  useEffect(() => {
       setTestDeviceIDAsync("EMULATOR");
   }, [])
 
@@ -58,7 +59,7 @@ const check = () => {
       >
       <AdMobBanner
           bannerSize="smartBanner"
-          adUnitID="ca-app-pub-1575625881370911/6730615952" 
+          adUnitID="ca-app-pub-1575625881370911/2289997432" 
           servePersonalizedAds // true or false
           onDidFailToReceiveAdWithError={(e) => console.log(e)}
           />

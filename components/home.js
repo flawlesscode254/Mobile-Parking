@@ -25,6 +25,18 @@ const Home = ({ navigation }) => {
     setTestDeviceIDAsync("EMULATOR");
   }, [])
 
+  // const interstitialAdID = Platform.select({
+  //   ios: "ca-app-pub-3940256099942544/4411468910",
+  //   android: "ca-app-pub-1575625881370911/6355227348",
+  // });
+
+  // const showInterstitial = () => {
+  //   AdMobInterstitial.setAdUnitID(interstitialAdID);
+  //   AdMobInterstitial.requestAdAsync().then(() => {
+  //     AdMobInterstitial.showAdAsync().catch((e) => console.log(e));
+  //   });
+  // }
+
   const offsetValue = useRef(new Animated.Value(0)).current;
   const scaleValue = useRef(new Animated.Value(1)).current;
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
@@ -53,7 +65,7 @@ const Home = ({ navigation }) => {
       >
       <AdMobBanner
           bannerSize="smartBanner"
-          adUnitID="ca-app-pub-1575625881370911/6730615952" 
+          adUnitID="ca-app-pub-1575625881370911/2289997432" 
           servePersonalizedAds // true or false
           onDidFailToReceiveAdWithError={(e) => console.log(e)}
           />
@@ -73,7 +85,10 @@ const Home = ({ navigation }) => {
         }}>{auth?.currentUser?.displayName}</Text>
 
 <View>
-        <TouchableOpacity onPress={() => navigation.navigate("Book")}>
+        <TouchableOpacity onPress={() => {
+          // await showInterstitial()
+          navigation.navigate("Book")
+        }}>
       <View style={{
         flexDirection: "row",
         alignItems: 'center',
@@ -217,8 +232,8 @@ const Home = ({ navigation }) => {
 
 const TabButton = (currentTab, setCurrentTab, title, image) => {
   return (
-    <TouchableOpacity onPress={() => {
-        setCurrentTab(title)
+    <TouchableOpacity onPress={ async() => {
+       setCurrentTab(title)
     }}>
       <View style={{
         flexDirection: "row",

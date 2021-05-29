@@ -24,8 +24,8 @@
         "foregroundImage": "./assets/parking.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.duncanii.TownParking",
-      "googleMobileAdsAppId":"ca-app-pub-1575625881370911/6730615952"
+      "googleMobileAdsAppId": "ca-app-pub-1575625881370911/2289997432",
+      "package": "com.duncanii.TownParking"
     },
     "web": {
       "favicon": "./assets/car.png"
