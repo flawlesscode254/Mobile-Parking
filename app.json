@@ -20,11 +20,13 @@
       "supportsTablet": true
     },
     "android": {
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-1575625881370911/6730615952"
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/parking.png",
         "backgroundColor": "#FFFFFF"
       },
-      "googleMobileAdsAppId": "ca-app-pub-1575625881370911/2289997432",
       "package": "com.duncanii.TownParking"
     },
     "web": {

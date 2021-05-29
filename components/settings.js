@@ -47,7 +47,7 @@ const settings = () => {
       >
       <AdMobBanner
           bannerSize="smartBanner"
-          adUnitID="ca-app-pub-1575625881370911/2289997432" 
+          adUnitID="ca-app-pub-1575625881370911/6730615952" 
           servePersonalizedAds // true or false
           onDidFailToReceiveAdWithError={(e) => console.log(e)}
           />
