@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Image, SafeAreaView, StyleSheet, ToastAndroid, Text, TouchableOpacity, View } from 'react-native';
 import home from '../assets/home.png';
 import notifications from '../assets/bell.png';
 import settings from '../assets/settings.png';
@@ -8,7 +8,7 @@ import menu from '../assets/menu.png';
 import close from '../assets/close.png';
 import Notifications from '../components/notifications'
 import Settings from '../components/settings'
-import { auth } from '../firebase'
+import { auth, db } from '../firebase'
 import Terms from '../components/terms'
 import star from '../assets/star.png'
 import prof from '../assets/prof.png'
@@ -20,10 +20,25 @@ import {
 const Home = ({ navigation }) => {
   const [currentTab, setCurrentTab] = useState("Home");
   const [showMenu, setShowMenu] = useState(false);
+  const [stream, setStream] = useState([])
 
   useEffect(() => {
     setTestDeviceIDAsync("EMULATOR");
   }, [])
+
+  const showToast = () => {
+    ToastAndroid.show('You cannot book another spot until you clear from the current one!', ToastAndroid.LONG);
+  }
+
+  db.collection('orders')
+      .where("email", '==', auth?.currentUser?.email)
+      .onSnapshot(snapshot => {
+        setStream(snapshot.docs.map(doc => (
+          {
+            id: doc.id,
+            state: doc.data().state
+          })))
+      }) 
 
   // const interstitialAdID = Platform.select({
   //   ios: "ca-app-pub-3940256099942544/4411468910",
@@ -87,7 +102,12 @@ const Home = ({ navigation }) => {
 <View>
         <TouchableOpacity onPress={() => {
           // await showInterstitial()
-          navigation.navigate("Book")
+          if (stream){
+            showToast()
+          }
+          else{
+            navigation.navigate("Book")
+          }
         }}>
       <View style={{
         flexDirection: "row",
@@ -114,6 +134,16 @@ const Home = ({ navigation }) => {
 
       </View>
     </TouchableOpacity>
+        </View>
+        <View>
+          {stream.map(({ id, state }) => (
+            <Text style={{
+              color: "orangered",
+              fontSize: 15,
+              fontWeight: "bold",
+              marginTop: 15
+            }} key={id}>{state}</Text>
+          ))}
         </View>
 
         <View style={{ flexGrow: 1, marginTop: 50 }}>
